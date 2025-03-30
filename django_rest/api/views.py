@@ -1,11 +1,12 @@
 # from django.shortcuts import render
 # from django.http import JsonResponse
 from students.models import Student
-from .serializers import StudentSerializer
+from .serializers import StudentSerializer, EmpSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
-
+from rest_framework.views import APIView # to handle class based views
+from employees.models import Employee
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -51,4 +52,18 @@ def studentDetailView(request, pk):
         student.delete()
         return Response(status=status.HTTP_204_NO_CONTENT) # bcz there will be no content after deleting the student
     
+class Employees(APIView): # In CBVs we create member functions for CRUD operations
+    # instance method 
+    def get(self, request): # member function of the parent class
+        # fetching employess very similar to FBVs
+        employees = Employee.objects.all()
+        serializer = EmpSerializer(employees, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
+    # Create new employee
+    def post(self, request):
+        serializer = EmpSerializer(data = request.data) # accepting data coming from request
+        if serializer.is_valid():
+            serializer.save()   
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)            
