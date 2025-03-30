@@ -23,13 +23,32 @@ def studentsView(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-@api_view(['GET'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def studentDetailView(request, pk):
     try:
         student = Student.objects.get(pk = pk)
     except Student.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
+    # finding operation
     if request.method =='GET':
         serializer = StudentSerializer(student)
         return Response(serializer.data, status=status.HTTP_200_OK) 
+    
+    # editing operation 
+    elif request.method == 'PUT': # editing existing data
+        # trying to update data
+        serializer = StudentSerializer(student, data = request.data) # accepting incoming data, and prepopulating existing data 
+        # data will create new data, and using sutdent with this will update this specific student
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    # deleting operation
+    elif request.method == 'DELETE':
+        student.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT) # bcz there will be no content after deleting the student
+    
+    
