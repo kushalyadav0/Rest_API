@@ -7,6 +7,9 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView # to handle class based views
 from employees.models import Employee
+from django.http import Http404
+
+
 
 # Create your views here.
 @api_view(['GET', 'POST'])
@@ -67,3 +70,14 @@ class Employees(APIView): # In CBVs we create member functions for CRUD operatio
             serializer.save()   
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)            
+    
+class EmployeesDetails(APIView):
+    def get_object(self, request, pk):
+        try:
+            return Employee.objects.get(pk = pk)
+        except Employee.DoesNotExist:
+            raise Http404
+    
+    def get(self, request, pk):
+        employee = self.get_object(pk=pk)
+        return Response()

@@ -7,6 +7,6 @@ urlpatterns = [
     path('students/<int:pk>/', views.studentDetailView),
     # employee urls
     path('employees/', views.Employees.as_view()), # for class based view
-    path('emplyees/<int:pk>/', views.Employees.as_view()),
+    path('employees/<int:pk>/', views.EmployeesDetails.as_view()),
     
 ]
