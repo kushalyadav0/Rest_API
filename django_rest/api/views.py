@@ -80,4 +80,4 @@ class EmployeesDetails(APIView):
     
     def get(self, request, pk):
         employee = self.get_object(pk=pk)
-        return Response()
+        return Response(employee.data, status=status.HTTP_200_OK)
