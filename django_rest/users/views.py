@@ -1,10 +1,6 @@
-from django.shortcuts import render
-
-# Create your views here.
-
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .forms import SignUp_form
+# from .forms import SignUp_form
 from django.contrib import messages
 # our browser is accepting cookies, The view function passes a request to the template’s render method.In the template, there is a {% csrf_token %} template tag inside each POST form that targets an internal URL.If you are not using CsrfViewMiddleware, then you must use csrf_protect on any views that use the csrf_token template tag, as well as those that accept the POST data.The form has a valid CSRF token. After logging in in another browser tab or hitting the back button after a login, you may need to reload the page with the form, because the token is rotated after a login.
 from django.views.decorators.csrf import csrf_protect
