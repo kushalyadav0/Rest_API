@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView # to handle class based views
 from employees.models import Employee
 from django.http import Http404
-
+from rest_framework import mixins, generics
 
 
 # Create your views here.
@@ -97,3 +97,7 @@ class EmployeesDetails(APIView):
         employee = self.get_object(pk)
         employee.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# Mixins
+class Employees(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    pass 
