@@ -144,7 +144,9 @@ class BooksDetails(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
     
 # Viewsets
+"""
 class companiesViewset(viewsets.ViewSet): # extending viewset class
+
     def list(self, request):
         queryset = Companies.objects.all()
         serializer = companiesSerializer(queryset, many = True)
@@ -164,7 +166,7 @@ class companiesViewset(viewsets.ViewSet): # extending viewset class
     
     def update(self, request, pk= None):
         company = Companies.objects.get(pk = pk)
-        serializer = companiesSerializer(company    , data = request.data)
+        serializer = companiesSerializer(company, data = request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
@@ -174,4 +176,9 @@ class companiesViewset(viewsets.ViewSet): # extending viewset class
         company = get_object_or_404(Companies, pk= pk)
         company.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
+"""
+# using modelViewSets
+class companiesViewset(viewsets.ModelViewSet): # when using model viewset we just need to give queryset and serializer_class ans bangg!!! it's done 
+    queryset = Companies.objects.all()
+    serializer_class = companiesSerializer
+    
