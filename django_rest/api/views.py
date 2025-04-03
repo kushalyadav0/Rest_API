@@ -1,16 +1,17 @@
-# from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 # from django.http import JsonResponse
 from students.models import Student
-from .serializers import StudentSerializer, EmpSerializer, TeacherSerializer, BookSerializer
+from .serializers import StudentSerializer, EmpSerializer, TeacherSerializer, BookSerializer, companiesSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView # to handle class based views
 from employees.models import Employee
 from django.http import Http404
-from rest_framework import mixins, generics
+from rest_framework import mixins, generics, viewsets
 from teachers.models import Teachers
 from books.models import Books
+from companies.models import Companies
 
 # Create your views here.
 
@@ -136,10 +137,25 @@ class teachersDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins
 class books(generics.ListAPIView, generics.CreateAPIView): # this class will accept two attributes which are queryset and serializer_class
     queryset = Books.objects.all()
     serializer_class = BookSerializer
-    
 
 class BooksDetails(generics.RetrieveUpdateDestroyAPIView):  
     queryset = Books.objects.all()
     serializer_class = BookSerializer
     lookup_field = 'pk'
     
+# Viewsets
+class companiesViewset(viewsets.ViewSet): # extending viewset class
+    def list(self, request):
+        queryset = Companies.objects.all()
+        serializer = companiesSerializer(queryset, many = True)
+        return Response(serializer.data)
+    
+    def create(self, request):
+        serializer = companiesSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status= status.HTTP_201_CREATED)
+        return Response(serializer.errors)
+    
+    def update(self, request, pk):
+        company = get_object_or_404(Companies)

@@ -1,5 +1,9 @@
 from django.urls import path, include
 from . import views
+from rest_framework.routers import DefaultRouter # this will trake care of urls of viewsets
+
+router = DefaultRouter()
+router.register('companies', views.companiesViewset, basename= 'companies') # registering views that we will be using
 
 urlpatterns = [
     # student urls
@@ -19,6 +23,10 @@ urlpatterns = [
     # for generics
     path('books/', views.books.as_view()),
     path('books/<int:pk>/', views.BooksDetails.as_view()),
+    
+    # companies urls
+    # viewsets
+    path('', include(router.urls))
     
     
 ]
