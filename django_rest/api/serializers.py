@@ -2,6 +2,7 @@ from rest_framework import serializers
 from students.models import Student
 from employees.models import Employee
 from teachers.models import Teachers
+from books.models import Books
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,4 +18,9 @@ class EmpSerializer(serializers.ModelSerializer):
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta():
         model = Teachers
+        fields = '__all__'
+        
+class BookSerializer(serializers.ModelSerializer):
+    class Meta():
+        model = Books
         fields = '__all__'

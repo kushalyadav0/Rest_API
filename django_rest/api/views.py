@@ -1,7 +1,7 @@
 # from django.shortcuts import render
 # from django.http import JsonResponse
 from students.models import Student
-from .serializers import StudentSerializer, EmpSerializer, TeacherSerializer
+from .serializers import StudentSerializer, EmpSerializer, TeacherSerializer, BookSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -10,7 +10,7 @@ from employees.models import Employee
 from django.http import Http404
 from rest_framework import mixins, generics
 from teachers.models import Teachers
-
+from books.models import Books
 
 # Create your views here.
 
@@ -131,3 +131,15 @@ class teachersDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins
      
      def delete(self, request, pk):
          return self.destroy(request, pk)
+
+# Generics
+class books(generics.ListAPIView, generics.CreateAPIView): # this class will accept two attributes which are queryset and serializer_class
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+    
+
+class BooksDetails(generics.RetrieveUpdateDestroyAPIView):  
+    queryset = Books.objects.all()
+    serializer_class = BookSerializer
+    lookup_field = 'pk'
+    

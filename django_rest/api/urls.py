@@ -5,12 +5,20 @@ urlpatterns = [
     # student urls
     path('students/', views.studentsView),
     path('students/<int:pk>/', views.studentDetailView),
+    
     # employee urls
     path('employees/', views.Employees.as_view()), # for class based view
     path('employees/<int:pk>/', views.EmployeesDetails.as_view()),
+    
     # teacher urls
     # for mixins
     path('teachers/', views.teachers.as_view()),
     path('teachers/<int:pk>/', views.teachersDetails.as_view()),
+    
+    # books urls
+    # for generics
+    path('books/', views.books.as_view()),
+    path('books/<int:pk>/', views.BooksDetails.as_view()),
+    
     
 ]
