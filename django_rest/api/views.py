@@ -1,7 +1,7 @@
 # from django.shortcuts import render
 # from django.http import JsonResponse
 from students.models import Student
-from .serializers import StudentSerializer, EmpSerializer
+from .serializers import StudentSerializer, EmpSerializer, TeacherSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -9,6 +9,7 @@ from rest_framework.views import APIView # to handle class based views
 from employees.models import Employee
 from django.http import Http404
 from rest_framework import mixins, generics
+from teachers.models import Teachers
 
 
 # Create your views here.
@@ -99,5 +100,33 @@ class EmployeesDetails(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 # Mixins
+
+"""
 class Employees(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     pass 
+"""
+
+class teachers(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView): # we want to list down the teachers and we want to create new teachers
+     queryset = Teachers.objects.all()
+     serializer_class = TeacherSerializer
+     
+     def get(self, request):
+         return self.list(request) # using list method of mixins to get objects
+     
+     def post(self,request):
+         return self.create(request) # to create new teacher object
+     
+     
+class teachersDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+     queryset = Teachers.objects.all()
+     serializer_class = TeacherSerializer
+     
+     # primary key based operations 
+     def get(self, request, pk): # to get a single objest using primary key
+         return self.retrieve(request, pk)
+     
+     def put(self, request, pk):
+         return self.update(request, pk)
+     
+     def delete(self, request, pk):
+         return self.destroy(request, pk)

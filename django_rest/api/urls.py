@@ -8,5 +8,9 @@ urlpatterns = [
     # employee urls
     path('employees/', views.Employees.as_view()), # for class based view
     path('employees/<int:pk>/', views.EmployeesDetails.as_view()),
+    # teacher urls
+    # for mixins
+    path('teachers/', views.teachers.as_view()),
+    path('teachers/<int:pk>/', views.teachersDetails.as_view()),
     
 ]
