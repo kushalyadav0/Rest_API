@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'api',
     'employees',
     'teachers',
+    'books',
     'users',
     
 ]

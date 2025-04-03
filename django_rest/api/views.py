@@ -13,6 +13,7 @@ from teachers.models import Teachers
 
 
 # Create your views here.
+
 @api_view(['GET', 'POST'])
 def studentsView(request):
     if request.method == 'GET':
@@ -116,7 +117,7 @@ class teachers(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
      def post(self,request):
          return self.create(request) # to create new teacher object
      
-     
+    
 class teachersDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
      queryset = Teachers.objects.all()
      serializer_class = TeacherSerializer
