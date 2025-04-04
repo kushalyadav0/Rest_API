@@ -12,6 +12,8 @@ from rest_framework import mixins, generics, viewsets
 from teachers.models import Teachers
 from books.models import Books
 from companies.models import Companies
+from blogs.models import Blog, Comments
+from blogs.serializers import BlogSerializer, CommentsSerializer
 
 # Create your views here.
 
@@ -182,3 +184,10 @@ class companiesViewset(viewsets.ModelViewSet): # when using model viewset we jus
     queryset = Companies.objects.all()
     serializer_class = companiesSerializer
     
+class BlogsView(generics.ListCreateAPIView):
+    queryset = Blog.objects.all()
+    serializer_class= BlogSerializer
+
+class CommentsView(generics.ListCreateAPIView):
+    queryset = Comments.objects.all()
+    serializer_class = CommentsSerializer

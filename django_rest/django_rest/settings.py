@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'books',
    'companies',
     'users',
+    'blogs',
     
 ]
 

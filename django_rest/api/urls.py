@@ -26,7 +26,10 @@ urlpatterns = [
     
     # companies urls
     # viewsets
-    path('', include(router.urls))
+    path('', include(router.urls)), 
     
+    # Blogs
+   path('blogs/', views.BlogsView.as_view()),
+   path('comments/',views.CommentsView.as_view()),
     
 ]
