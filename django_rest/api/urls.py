@@ -31,5 +31,8 @@ urlpatterns = [
     # Blogs
    path('blogs/', views.BlogsView.as_view()),
    path('comments/',views.CommentsView.as_view()),
-    
+    # urls for primary key based operations
+    path('blogs/<int:pk>/', views.BlogDetailView.as_view()),
+    path('comments/<int:pk>/', views.CommentDetailsView.as_view()),
+
 ]

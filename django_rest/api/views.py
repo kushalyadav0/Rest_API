@@ -184,6 +184,7 @@ class companiesViewset(viewsets.ModelViewSet): # when using model viewset we jus
     queryset = Companies.objects.all()
     serializer_class = companiesSerializer
     
+# Blogs
 class BlogsView(generics.ListCreateAPIView):
     queryset = Blog.objects.all()
     serializer_class= BlogSerializer
@@ -191,3 +192,13 @@ class BlogsView(generics.ListCreateAPIView):
 class CommentsView(generics.ListCreateAPIView):
     queryset = Comments.objects.all()
     serializer_class = CommentsSerializer
+
+class BlogDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
+    lookup_field = 'pk'
+
+class CommentDetailsView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Comments.objects.all()
+    serializer_class = CommentsSerializer
+    lookup_field = 'pk'
