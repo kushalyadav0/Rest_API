@@ -46,6 +46,7 @@ INSTALLED_APPS = [
    'companies',
     'users',
     'blogs',
+    'django-filters'
     
 ]
 
