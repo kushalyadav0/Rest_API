@@ -14,6 +14,7 @@ from books.models import Books
 from companies.models import Companies
 from blogs.models import Blog, Comments
 from blogs.serializers import BlogSerializer, CommentsSerializer
+from .paginations import CustomPagination
 
 # Create your views here.
 
@@ -183,6 +184,7 @@ class companiesViewset(viewsets.ViewSet): # extending viewset class
 class companiesViewset(viewsets.ModelViewSet): # when using model viewset we just need to give queryset and serializer_class ans bangg!!! it's done 
     queryset = Companies.objects.all()
     serializer_class = companiesSerializer
+    pagination_class = CustomPagination
     
 # Blogs
 class BlogsView(generics.ListCreateAPIView):

@@ -1,0 +1,8 @@
+# for custom paginations
+
+from rest_framework.pagination import LimitOffsetPagination, PageNumberPagination
+from rest_framework.response import Response
+
+class CustomPagination(PageNumberPagination):
+    page_size_query_param = 'page_size'
+    
