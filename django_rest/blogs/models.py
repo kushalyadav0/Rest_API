@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Blog(models.Model):
+    blog_id = models.CharField(max_length=50, null=True)
     blog_title = models.CharField(max_length=50)
     blog_body =models.TextField()
 

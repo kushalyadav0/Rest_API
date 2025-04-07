@@ -15,6 +15,7 @@ from companies.models import Companies
 from blogs.models import Blog, Comments
 from blogs.serializers import BlogSerializer, CommentsSerializer
 from .paginations import CustomPagination
+from .filters import BlogFilter
 
 
 # Create your views here.
@@ -191,7 +192,8 @@ class companiesViewset(viewsets.ModelViewSet): # when using model viewset we jus
 class BlogsView(generics.ListCreateAPIView):
     queryset = Blog.objects.all()
     serializer_class= BlogSerializer
-    filterset_fields = ['blog_title',]
+   #  filterset_fields = ['blog_title',] "now we don't need this as we have filter class"
+    filterset_class = BlogFilter
 
 class CommentsView(generics.ListCreateAPIView):
     queryset = Comments.objects.all()
