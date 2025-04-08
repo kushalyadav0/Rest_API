@@ -8,14 +8,14 @@ class BlogFilter(django_filters.FilterSet):
     id = django_filters.RangeFilter(field_name = 'id')
     # we can use RangeFilter if we are filtering by the primary key 
     # to do the same with blog_id we need to go a bit advanced like defining function for minimum and maximum value of blog_id
-    blog_id_min = django_filters.CharFilter(method = 'filter_by_blog_id_range')
-    blog_id_max = django_filters.CharFilter(method = 'filter_by_blog_id_range')
+    blog_id_min = django_filters.CharFilter(method = 'filter_by_blog_id_range', label = 'from_blog_Id')
+    blog_id_max = django_filters.CharFilter(method = 'filter_by_blog_id_range', label = 'to_blog_Id')
 
     class Meta():
         model = Blog
         fields = ['blog_title', 'blog_body', 'blog_id_min', 'blog_id_max']
 
-    def filter_by_blog_id_range(self, queryset, name, value):
+    def filter_by_blog_id_range(self, queryset, name, value): # queryset comes from filterset 
         if name == 'blog_id_min':
             return queryset.filter(blog_id__gte=value) # here __gte represents values greater than value
         
