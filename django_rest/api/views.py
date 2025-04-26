@@ -16,7 +16,7 @@ from blogs.models import Blog, Comments
 from blogs.serializers import BlogSerializer, CommentsSerializer
 from .paginations import CustomPagination
 from .filters import BlogFilter
-
+from rest_framework.filters import SearchFilter # for search functionality
 
 # Create your views here.
 
@@ -121,7 +121,7 @@ class teachers(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericA
          return self.list(request) # using list method of mixins to get objects
      
      def post(self,request):
-         return self.create(request) # to create new teacher object
+         return self.create(request, form = TeacherSerializer) # to create new teacher object
      
     
 class teachersDetails(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
@@ -194,6 +194,8 @@ class BlogsView(generics.ListCreateAPIView):
     serializer_class= BlogSerializer
    #  filterset_fields = ['blog_title',] "now we don't need this as we have filter class"
     filterset_class = BlogFilter
+    filter_backends = [SearchFilter ]
+    search_fields = ['blog_title',]
 
 class CommentsView(generics.ListCreateAPIView):
     queryset = Comments.objects.all()
@@ -208,3 +210,5 @@ class CommentDetailsView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comments.objects.all()
     serializer_class = CommentsSerializer
     lookup_field = 'pk'
+
+    
